@@ -9,7 +9,7 @@ from src.ui.components.toolbar import Toolbar
 from src.ui.components.chat_panel import ChatPanel
 from src.ui.components.notes_panel import NotesPanel
 from src.ui.plugins.plugin_manager import PluginManager
-from src.config.settings import Settings
+from src.configs.settings import Settings
 
 class MainWindow:
     def __init__(self, settings: Settings):

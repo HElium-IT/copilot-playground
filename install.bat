@@ -15,8 +15,26 @@ if errorlevel 1 (
 echo ✅ Python trovato
 python --version
 
+REM Crea ambiente virtuale se non esiste
+if not exist "venv" (
+    echo 🏗️ Creazione ambiente virtuale...
+    python -m venv venv
+    if errorlevel 1 (
+        echo ❌ Errore nella creazione dell'ambiente virtuale
+        pause
+        exit /b 1
+    )
+    echo ✅ Ambiente virtuale creato
+) else (
+    echo ✅ Ambiente virtuale esistente trovato
+)
+
+REM Attiva ambiente virtuale
+echo 🔧 Attivazione ambiente virtuale...
+call venv\Scripts\activate.bat
+
 REM Installa dipendenze
-echo 📦 Installazione dipendenze...
+echo 📦 Installazione dipendenze nell'ambiente virtuale...
 pip install -r requirements.txt
 
 if errorlevel 1 (
@@ -51,9 +69,10 @@ echo 🎉 Installazione completata!
 echo.
 echo 📋 Prossimi passi:
 echo 1. Modifica il file .env per configurare le API keys
-echo 2. Avvia l'app con: python app.py
-echo 3. Si aprirà l'applicazione con interfaccia grafica
-echo 4. Usa le impostazioni nell'app per configurare ulteriormente
+echo 2. Attiva l'ambiente virtuale: venv\Scripts\activate.bat
+echo 3. Avvia l'app con: python launcher.py
+echo 4. Si aprirà l'applicazione con interfaccia grafica
+echo 5. Usa le impostazioni nell'app per configurare ulteriormente
 echo.
 echo 📚 Per maggiori informazioni, consulta il README.md
 pause

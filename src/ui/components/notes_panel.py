@@ -12,7 +12,7 @@ import datetime
 import tkinter.messagebox
 
 if TYPE_CHECKING:
-    from src.config.settings import Settings
+    from src.configs.settings import Settings
 
 class NotesPanel(ctk.CTkFrame):
     def __init__(self, parent, settings: 'Settings'):

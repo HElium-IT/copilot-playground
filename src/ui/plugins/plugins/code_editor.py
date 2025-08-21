@@ -8,7 +8,7 @@ from src.ui.plugins.plugin_manager import PluginBase
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.config.settings import Settings
+    from src.configs.settings import Settings
 
 class CodeEditorPlugin(PluginBase):
     def __init__(self):

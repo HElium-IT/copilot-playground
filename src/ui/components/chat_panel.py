@@ -10,7 +10,7 @@ import threading
 from src.services.copilot_service import CopilotService
 
 if TYPE_CHECKING:
-    from src.config.settings import Settings
+    from src.configs.settings import Settings
     from src.ui.plugins.plugin_manager import PluginManager
 
 class ChatPanel(ctk.CTkFrame):

@@ -8,7 +8,7 @@ from typing import List, Dict, Any, TYPE_CHECKING
 import os
 
 if TYPE_CHECKING:
-    from src.config.settings import Settings
+    from src.configs.settings import Settings
 
 class CopilotService:
     def __init__(self, settings: 'Settings'):

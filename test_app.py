@@ -15,7 +15,7 @@ def test_imports():
     print("🧪 Testando gli import...")
     
     try:
-        from src.config.settings import Settings
+        from src.configs.settings import Settings
         print("✅ Settings importato correttamente")
     except Exception as e:
         print(f"❌ Errore nell'import di Settings: {e}")
@@ -42,7 +42,7 @@ def test_settings():
     print("\n⚙️ Testando le impostazioni...")
     
     try:
-        from src.config.settings import Settings
+        from src.configs.settings import Settings
         settings = Settings()
         
         # Testa get/set
@@ -65,7 +65,7 @@ def test_plugin_system():
     print("\n🔧 Testando il sistema dei plugin...")
     
     try:
-        from src.config.settings import Settings
+        from src.configs.settings import Settings
         from src.ui.plugins.plugin_manager import PluginManager
         
         settings = Settings()
@@ -94,7 +94,7 @@ def test_copilot_service():
     print("\n🤖 Testando il servizio Copilot...")
     
     try:
-        from src.config.settings import Settings
+        from src.configs.settings import Settings
         from src.services.copilot_service import CopilotService
         
         settings = Settings()

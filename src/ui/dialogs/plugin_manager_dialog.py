@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from src.ui.plugins.plugin_manager import PluginManager
-    from src.config.settings import Settings
+    from src.configs.settings import Settings
 
 class PluginManagerDialog(ctk.CTkToplevel):
     def __init__(self, parent, plugin_manager: 'PluginManager', settings: 'Settings'):

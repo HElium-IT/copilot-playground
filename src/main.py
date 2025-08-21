@@ -5,7 +5,7 @@ Main entry point per l'applicazione Studio App
 import tkinter as tk
 import customtkinter as ctk
 from src.ui.main_window import MainWindow
-from src.config.settings import Settings
+from src.configs.settings import Settings
 import os
 from dotenv import load_dotenv
 

@@ -13,9 +13,26 @@ fi
 
 echo "✅ Python trovato: $(python3 --version)"
 
+# Crea ambiente virtuale se non esiste
+if [ ! -d "venv" ]; then
+    echo "🏗️ Creazione ambiente virtuale..."
+    python3 -m venv venv
+    if [ $? -ne 0 ]; then
+        echo "❌ Errore nella creazione dell'ambiente virtuale"
+        exit 1
+    fi
+    echo "✅ Ambiente virtuale creato"
+else
+    echo "✅ Ambiente virtuale esistente trovato"
+fi
+
+# Attiva ambiente virtuale
+echo "🔧 Attivazione ambiente virtuale..."
+source venv/bin/activate
+
 # Installa dipendenze
-echo "📦 Installazione dipendenze..."
-pip3 install -r requirements.txt
+echo "📦 Installazione dipendenze nell'ambiente virtuale..."
+pip install -r requirements.txt
 
 if [ $? -eq 0 ]; then
     echo "✅ Dipendenze installate con successo"
@@ -26,7 +43,7 @@ fi
 
 # Esegui test
 echo "🧪 Esecuzione test..."
-python3 test_app.py
+python test_app.py
 
 if [ $? -eq 0 ]; then
     echo "✅ Tutti i test sono passati"
@@ -47,8 +64,10 @@ echo "🎉 Installazione completata!"
 echo ""
 echo "📋 Prossimi passi:"
 echo "1. Modifica il file .env per configurare le API keys"
-echo "2. Avvia l'app con: python3 app.py"
-echo "3. Su sistemi con interfaccia grafica, si aprirà l'applicazione"
-echo "4. Usa le impostazioni nell'app per configurare ulteriormente"
+echo "2. Attiva l'ambiente virtuale: source venv/bin/activate"
+echo "3. Avvia l'app con: python launcher.py"
+echo "4. Su sistemi con interfaccia grafica, si aprirà l'applicazione"
+echo "5. Usa le impostazioni nell'app per configurare ulteriormente"
 echo ""
+echo "💡 Suggerimento: L'app può essere avviata anche con: python launcher.py"
 echo "📚 Per maggiori informazioni, consulta il README.md"

@@ -9,7 +9,7 @@ from typing import Dict, List, Any, TYPE_CHECKING
 from abc import ABC, abstractmethod
 
 if TYPE_CHECKING:
-    from src.config.settings import Settings
+    from src.configs.settings import Settings
 
 class PluginBase(ABC):
     """Classe base per tutti i plugin"""

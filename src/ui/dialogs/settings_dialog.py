@@ -7,7 +7,7 @@ import tkinter as tk
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.config.settings import Settings
+    from src.configs.settings import Settings
 
 class SettingsDialog(ctk.CTkToplevel):
     def __init__(self, parent, settings: 'Settings'):
@@ -115,4 +115,101 @@ class SettingsDialog(ctk.CTkToplevel):
         layout_label.pack(anchor="w", padx=15, pady=(15, 5))
         
         # Checkbox per pannello note
-        self.notes_visible_var = ctk.BooleanVar()\n        self.notes_checkbox = ctk.CTkCheckBox(\n            layout_frame,\n            text=\"Mostra pannello note\",\n            variable=self.notes_visible_var\n        )\n        self.notes_checkbox.pack(anchor=\"w\", padx=15, pady=(0, 10))\n        \n        # Pulsanti\n        buttons_frame = ctk.CTkFrame(main_frame, fg_color=\"transparent\")\n        buttons_frame.pack(fill=\"x\", pady=(0, 10))\n        \n        self.cancel_btn = ctk.CTkButton(\n            buttons_frame,\n            text=\"Annulla\",\n            command=self.cancel\n        )\n        self.cancel_btn.pack(side=\"right\", padx=(5, 0))\n        \n        self.save_btn = ctk.CTkButton(\n            buttons_frame,\n            text=\"Salva\",\n            command=self.save_settings\n        )\n        self.save_btn.pack(side=\"right\")\n    \n    def load_settings(self):\n        \"\"\"Carica le impostazioni correnti\"\"\"\n        # API Key\n        api_key = self.settings.get_github_api_key()\n        if api_key:\n            self.api_key_entry.insert(0, api_key)\n        \n        # Tema\n        theme = self.settings.get(\"theme\", \"dark\")\n        self.theme_option.set(theme)\n        \n        # Layout\n        layout_config = self.settings.get(\"layout\", {})\n        notes_visible = layout_config.get(\"notes_panel_visible\", True)\n        self.notes_visible_var.set(notes_visible)\n    \n    def save_settings(self):\n        \"\"\"Salva le impostazioni\"\"\"\n        # Salva API Key\n        api_key = self.api_key_entry.get().strip()\n        self.settings.set_github_api_key(api_key)\n        \n        # Salva tema\n        theme = self.theme_option.get()\n        self.settings.set(\"theme\", theme)\n        \n        # Salva layout\n        layout_config = self.settings.get(\"layout\", {})\n        layout_config[\"notes_panel_visible\"] = self.notes_visible_var.get()\n        self.settings.set(\"layout\", layout_config)\n        \n        # Applica le modifiche\n        ctk.set_appearance_mode(theme)\n        \n        self.destroy()\n    \n    def cancel(self):\n        \"\"\"Annulla le modifiche\"\"\"\n        self.destroy()\n    \n    def test_api_key(self):\n        \"\"\"Testa l'API key\"\"\"\n        api_key = self.api_key_entry.get().strip()\n        if not api_key:\n            self.show_message(\"Errore\", \"Inserisci prima un'API key\")\n            return\n        \n        # Simula il test (implementare la logica reale)\n        if len(api_key) > 10:\n            self.show_message(\"Successo\", \"API key valida!\")\n        else:\n            self.show_message(\"Errore\", \"API key non valida\")\n    \n    def on_theme_change(self, theme: str):\n        \"\"\"Gestisce il cambio di tema\"\"\"\n        ctk.set_appearance_mode(theme)\n    \n    def show_message(self, title: str, message: str):\n        \"\"\"Mostra un messaggio\"\"\"\n        dialog = ctk.CTkToplevel(self)\n        dialog.title(title)\n        dialog.geometry(\"300x150\")\n        dialog.transient(self)\n        dialog.grab_set()\n        \n        # Centra il dialog\n        dialog.update_idletasks()\n        x = (dialog.winfo_screenwidth() // 2) - (300 // 2)\n        y = (dialog.winfo_screenheight() // 2) - (150 // 2)\n        dialog.geometry(f\"300x150+{x}+{y}\")\n        \n        # Messaggio\n        msg_label = ctk.CTkLabel(dialog, text=message, wraplength=250)\n        msg_label.pack(pady=20)\n        \n        # Pulsante OK\n        ok_btn = ctk.CTkButton(dialog, text=\"OK\", command=dialog.destroy)\n        ok_btn.pack(pady=10)
+        self.notes_visible_var = ctk.BooleanVar()
+        self.notes_checkbox = ctk.CTkCheckBox(
+            layout_frame, text="Mostra pannello note", variable=self.notes_visible_var
+        )
+        self.notes_checkbox.pack(anchor="w", padx=15, pady=(0, 10))
+
+        # Pulsanti
+        buttons_frame = ctk.CTkFrame(main_frame, fg_color="transparent")
+        buttons_frame.pack(fill="x", pady=(0, 10))
+
+        self.cancel_btn = ctk.CTkButton(
+            buttons_frame, text="Annulla", command=self.cancel
+        )
+        self.cancel_btn.pack(side="right", padx=(5, 0))
+
+        self.save_btn = ctk.CTkButton(
+            buttons_frame, text="Salva", command=self.save_settings
+        )
+        self.save_btn.pack(side="right")
+
+    def load_settings(self):
+        """Carica le impostazioni correnti"""
+        # API Key
+        api_key = self.settings.get_github_api_key()
+        if api_key:
+            self.api_key_entry.insert(0, api_key)
+
+        # Tema
+        theme = self.settings.get("theme", "dark")
+        self.theme_option.set(theme)
+
+        # Layout
+        layout_config = self.settings.get("layout", {})
+        notes_visible = layout_config.get("notes_panel_visible", True)
+        self.notes_visible_var.set(notes_visible)
+
+    def save_settings(self):
+        """Salva le impostazioni"""
+        # Salva API Key
+        api_key = self.api_key_entry.get().strip()
+        self.settings.set_github_api_key(api_key)
+
+        # Salva tema
+        theme = self.theme_option.get()
+        self.settings.set("theme", theme)
+
+        # Salva layout
+        layout_config = self.settings.get("layout", {})
+        layout_config["notes_panel_visible"] = self.notes_visible_var.get()
+        self.settings.set("layout", layout_config)
+
+        # Applica le modifiche
+        ctk.set_appearance_mode(theme)
+
+        self.destroy()
+
+    def cancel(self):
+        """Annulla le modifiche"""
+        self.destroy()
+
+    def test_api_key(self):
+        """Testa l'API key"""
+        api_key = self.api_key_entry.get().strip()
+        if not api_key:
+            self.show_message("Errore", "Inserisci prima un'API key")
+            return
+
+        # Simula il test (implementare la logica reale)
+        if len(api_key) > 10:
+            self.show_message("Successo", "API key valida!")
+        else:
+            self.show_message("Errore", "API key non valida")
+
+    def on_theme_change(self, theme: str):
+        """Gestisce il cambio di tema"""
+        ctk.set_appearance_mode(theme)
+
+    def show_message(self, title: str, message: str):
+        """Mostra un messaggio"""
+        dialog = ctk.CTkToplevel(self)
+        dialog.title(title)
+        dialog.geometry("300x150")
+        dialog.transient(self)
+        dialog.grab_set()
+
+        # Centra il dialog
+        dialog.update_idletasks()
+        x = (dialog.winfo_screenwidth() // 2) - (300 // 2)
+        y = (dialog.winfo_screenheight() // 2) - (150 // 2)
+        dialog.geometry(f"300x150+{x}+{y}")
+
+        # Messaggio
+        msg_label = ctk.CTkLabel(dialog, text=message, wraplength=250)
+        msg_label.pack(pady=20)
+
+        # Pulsante OK
+        ok_btn = ctk.CTkButton(dialog, text="OK", command=dialog.destroy)
+        ok_btn.pack(pady=10)
